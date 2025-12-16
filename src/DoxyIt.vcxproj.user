@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Zip" DependsOnTargets="Build">
+    <PropertyGroup>
+        <ZipCmd Condition="'$(ZIPCMD)' == ''">zip</ZipCmd>
+    </PropertyGroup>
+    <Exec Command="if not exist $(OutDir)$(ProjectName) mkdir $(OutDir)$(ProjectName)"/>
+    <Exec Command="copy $(OutDir)$(ProjectName)$(TargetExt) $(OutDir)$(ProjectName)"/>
+    <Exec Command="for /f %%i in ('powershell -NoProfile -Command &quot;(Get-Item $(OutDir)$(ProjectName)$(TargetExt)).VersionInfo.ProductVersion&quot;') do del $(OutDir)$(ProjectName)-v%%i-$(Platform).zip"/>
+    <Exec Command="for /f %%i in ('powershell -NoProfile -Command &quot;(Get-Item $(OutDir)$(ProjectName)$(TargetExt)).VersionInfo.ProductVersion&quot;') do cd  $(OutDir)$(ProjectName) %26%26 $(ZIPCMD) -r ..\$(ProjectName)-v%%i-$(Platform).zip *"/>
+  </Target>
+</Project>
