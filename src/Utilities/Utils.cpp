@@ -23,7 +23,7 @@ std::string GetTextRange(int start, int end) {
 	if (end <= start) return std::string();
 
 	std::vector<char> buffer(end - start + 1);
-	Sci_TextRange tr;
+	Sci_TextRangeFull tr;
 	tr.chrg.cpMin = start;
 	tr.chrg.cpMax = end;
 	tr.lpstrText = buffer.data();
@@ -83,7 +83,7 @@ int FindNext(char* text, int len, bool regExp)
 	int curPos = editor.GetCurrentPos();
 	int flags = (regExp ? SCFIND_REGEXP : 0);
 
-	Sci_TextToFind ttf;
+	Sci_TextToFindFull ttf;
 	ttf.chrg.cpMin = curPos;
 	ttf.chrg.cpMax = curPos + len;
 	ttf.lpstrText = text;
@@ -93,7 +93,7 @@ int FindNext(char* text, int len, bool regExp)
 
 std::pair<int, int> FindInRange(const char *text, int start, int stop, bool regExp)
 {
-	Sci_TextToFind ttf;
+	Sci_TextToFindFull ttf;
 	ttf.chrg.cpMin = start;
 	ttf.chrg.cpMax = stop;
 	ttf.lpstrText = text;

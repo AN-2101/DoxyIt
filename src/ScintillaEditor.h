@@ -1,17 +1,17 @@
-// This file is part of {{ cookiecutter.plugin_name }}.
-//
-// Copyright (C){% now 'utc', '%Y' %} {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
-//
-// {{ cookiecutter.plugin_name }} is free software; you can redistribute it and/or
+// This file is part of DoxyIt.
+// 
+// Copyright (C)2013 Justin Dailey <dail8859@yahoo.com>
+// 
+// DoxyIt is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either
 // version 2 of the License, or (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-//
+// 
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -148,8 +148,8 @@ public:
 		Call(SCI_SETSAVEPOINT, SCI_UNUSED, SCI_UNUSED);
 	}
 
-	int GetStyledText(Sci_TextRange* tr) const {
-		sptr_t res = Call(SCI_GETSTYLEDTEXT, SCI_UNUSED, tr);
+	int GetStyledText(Sci_TextRangeFull* tr) const {
+		sptr_t res = Call(SCI_GETSTYLEDTEXTFULL, SCI_UNUSED, tr);
 		return static_cast<int>(res);
 	}
 
@@ -1066,13 +1066,13 @@ public:
 		return static_cast<int>(res);
 	}
 
-	int FindText(int searchFlags, Sci_TextToFind* ft) const {
-		sptr_t res = Call(SCI_FINDTEXT, searchFlags, ft);
+	int FindText(int searchFlags, Sci_TextToFindFull* ft) const {
+		sptr_t res = Call(SCI_FINDTEXTFULL, searchFlags, ft);
 		return static_cast<int>(res);
 	}
 
-	int FormatRange(bool draw, Sci_RangeToFormat* fr) const {
-		sptr_t res = Call(SCI_FORMATRANGE, draw, fr);
+	int FormatRange(bool draw, Sci_RangeToFormatFull* fr) const {
+		sptr_t res = Call(SCI_FORMATRANGEFULL, draw, fr);
 		return static_cast<int>(res);
 	}
 
@@ -1139,8 +1139,8 @@ public:
 		return text;
 	}
 
-	int GetTextRange(Sci_TextRange* tr) const {
-		sptr_t res = Call(SCI_GETTEXTRANGE, SCI_UNUSED, tr);
+	int GetTextRange(Sci_TextRangeFull* tr) const {
+		sptr_t res = Call(SCI_GETTEXTRANGEFULL, SCI_UNUSED, tr);
 		return static_cast<int>(res);
 	}
 
@@ -3307,8 +3307,8 @@ public:
 		Call(SCI_STOPRECORD, SCI_UNUSED, SCI_UNUSED);
 	}
 
-	void SetLexer(int lexer) const {
-		Call(SCI_SETLEXER, lexer, SCI_UNUSED);
+	void SetILexer(void *lexer) const {
+		Call(SCI_SETILEXER, 0, lexer);
 	}
 
 	int GetLexer() const {
@@ -3334,22 +3334,6 @@ public:
 
 	void SetKeyWords(int keyWordSet, const std::string& keyWords) const {
 		Call(SCI_SETKEYWORDS, keyWordSet, keyWords.c_str());
-	}
-
-	void SetLexerLanguage(const char* language) const {
-		Call(SCI_SETLEXERLANGUAGE, SCI_UNUSED, language);
-	}
-
-	void SetLexerLanguage(const std::string& language) const {
-		Call(SCI_SETLEXERLANGUAGE, SCI_UNUSED, language.c_str());
-	}
-
-	void LoadLexerLibrary(const char* path) const {
-		Call(SCI_LOADLEXERLIBRARY, SCI_UNUSED, path);
-	}
-
-	void LoadLexerLibrary(const std::string& path) const {
-		Call(SCI_LOADLEXERLIBRARY, SCI_UNUSED, path.c_str());
 	}
 
 	int GetProperty(const char* key, char* value) const {

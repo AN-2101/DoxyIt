@@ -41,10 +41,10 @@ INT_PTR CALLBACK abtDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			DestroyWindow(hwndDlg);
 			return true;
 		case IDC_GITHUB:
-			ShellExecute(hwndDlg, TEXT("open"), TEXT("https://github.com/dail8859/DoxyIt/"), NULL, NULL, SW_SHOWNORMAL);
+			ShellExecute(hwndDlg, TEXT("open"), TEXT("https://github.com/AN-2101/DoxyIt/"), NULL, NULL, SW_SHOWNORMAL);
 			return true;
 		case IDC_README:
-			ShellExecute(hwndDlg, TEXT("open"), TEXT("https://github.com/dail8859/DoxyIt/blob/v") VERSION_TEXT TEXT("/README.md"), NULL, NULL, SW_SHOWNORMAL);
+			ShellExecute(hwndDlg, TEXT("open"), TEXT("https://github.com/AN-2101/DoxyIt/blob/v") VERSION_TEXT TEXT("/README.md"), NULL, NULL, SW_SHOWNORMAL);
 			return true;
 		}
 	case WM_DESTROY:

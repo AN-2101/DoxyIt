@@ -74,7 +74,7 @@ const Parser *getCurrentParser(bool update)
 		SendNpp(NPPM_GETCURRENTLANGTYPE, SCI_UNUSED, (LPARAM) &lang_type);
 
 		// HACK: Keep backwards compatibility since N++ screwed up the javascript langtype
-		if(lang_type == L_JAVASCRIPT) lang_type = L_JS;
+		if(lang_type == L_JAVASCRIPT) lang_type = L_JS_EMBEDDED;
 
 		if(lang_type == L_USER /* || lang_type == L_EXTERNAL */)
 		{
@@ -184,7 +184,7 @@ void InitializeParsers(void)
 	parsers.emplace_back(REGISTER_PARSER(parse_c, JAVA, "Java", "/**", " *  ", " */", "@", "public boolean action(Event event, Object arg)"));
 	parsers.emplace_back(REGISTER_PARSER(parse_python, PYTHON, "Python", "## ", "#  ", "#  ", "@", "def foo(bar, string=None)"));
 	parsers.emplace_back(REGISTER_PARSER(parse_c, PHP, "PHP", "/**", " *  ", " */", "@", "function myFunction($abc, $defg)"));
-	parsers.emplace_back(REGISTER_PARSER(parse_c, JS, "JavaScript", "/**", " *  ", " */", "@", "function myFunction(abc, defg)"));
+	parsers.emplace_back(REGISTER_PARSER(parse_c, JS_EMBEDDED, "JavaScript", "/**", " *  ", " */", "@", "function myFunction(abc, defg)"));
 	parsers.emplace_back(REGISTER_PARSER(parse_c, CS, "C#", "/// ", "/// ", "/// ", "\\", "public int Method(ref int abc, int defg)"));
 }
 
