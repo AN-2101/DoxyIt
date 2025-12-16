@@ -1,6 +1,8 @@
 # DoxyIt
 
-[![Build status](https://ci.appveyor.com/api/projects/status/mma3iba7vlvjk6jf?svg=true)](https://ci.appveyor.com/project/dail8859/doxyit)
+Original author: Justin Dailey <dail8859@yahoo.com>
+
+Forked and maintained by: Anh Nguyen Duc <ducanh1962001@gmail.com>
 
 Notepad++ plugin for [Doxygen](http://www.doxygen.org) commenting. This also provides helpful features for creating and editing comment blocks, even if Doxygen isn't desired.
 
