@@ -17,8 +17,8 @@ extern "C" {
 
 #if defined(_WIN32)
 /* Return false on failure: */
-int Scintilla_RegisterClasses(void *hInstance);
-int Scintilla_ReleaseResources(void);
+//int Scintilla_RegisterClasses(void *hInstance);
+//int Scintilla_ReleaseResources(void);
 #endif
 
 #ifdef __cplusplus
