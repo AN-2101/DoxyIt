@@ -18,6 +18,7 @@
 
 #include "PluginDefinition.h"
 #include "Utils.h"
+#include <codecvt>
 
 std::string GetTextRange(int start, int end) {
 	if (end <= start) return std::string();
@@ -94,14 +95,14 @@ int FindNext(char* text, int len, bool regExp)
 std::pair<int, int> FindInRange(const char *text, int start, int stop, bool regExp)
 {
 	Sci_TextToFindFull ttf;
-	ttf.chrg.cpMin = start;
-	ttf.chrg.cpMax = stop;
+	ttf.chrg.cpMin = static_cast<Sci_Position>(start);
+	ttf.chrg.cpMax = static_cast<Sci_Position>(stop);
 	ttf.lpstrText = text;
 
 	int flags = (regExp ? SCFIND_REGEXP : 0);
 
 	if (editor.FindText(flags, &ttf) != INVALID_POSITION)
-		return std::make_pair(ttf.chrgText.cpMin, ttf.chrgText.cpMax);
+		return std::make_pair(static_cast<int>(ttf.chrgText.cpMin), static_cast<int>(ttf.chrgText.cpMax));
 
 	return std::make_pair(INVALID_POSITION, INVALID_POSITION);
 }
@@ -116,13 +117,18 @@ const char *getEolStr()
 
 std::wstring toWideString(std::string s)
 {
-	return std::wstring(s.begin(), s.end());
+    using convert_typeX = std::codecvt_utf8<wchar_t>;
+    std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+    return converterX.from_bytes(s);
 }
 
 std::string toString(const wchar_t *w)
 {
-	std::wstring wide(w);
-	return std::string(wide.begin(), wide.end());
+    using convert_typeX = std::codecvt_utf8<wchar_t>;
+    std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+    return converterX.to_bytes(w);
 }
 
 bool isWhiteSpace(const std::string& str)
