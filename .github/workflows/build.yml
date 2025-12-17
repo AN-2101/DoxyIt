@@ -21,7 +21,7 @@ jobs:
 
     - name: MSBuild of plugin dll
       working-directory: .\
-      run: msbuild src/DoxyIt.vcxproj /m /p:Configuration="${{ matrix.build_configuration }}" /p:Platform="${{ matrix.build_platform }}" /target:zip
+      run: msbuild DoxyIt.sln /m /p:Configuration="${{ matrix.build_configuration }}" /p:Platform="${{ matrix.build_platform }}" /target:zip
       env:
           ZIPCMD: 7z a -tzip
 
@@ -29,15 +29,15 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
           name: DoxyIt-${{ matrix.build_configuration }}-${{ matrix.build_platform }}
-          path: ${{ matrix.build_configuration }}\${{ matrix.build_platform }}\DoxyIt.dll
+          path: bin\${{ matrix.build_configuration }}\${{ matrix.build_platform }}\DoxyIt.dll
 
     - name: Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/') && matrix.build_configuration == 'Release'
       with:
           body: ${{ github.event.commits[0].message }}
-          files: ${{ matrix.build_configuration }}/${{ matrix.build_platform }}/DoxyIt-v${{ github.ref_name }}-${{ matrix.build_platform }}.zip
+          files: bin/${{ matrix.build_configuration }}/${{ matrix.build_platform }}/DoxyIt-${{ github.ref_name }}-${{ matrix.build_platform }}.zip
 
     - name: SHA256
       if: startsWith(github.ref, 'refs/tags/') && matrix.build_configuration == 'Release'
-      run: sha256sum.exe ${{ matrix.build_configuration }}\${{ matrix.build_platform }}\DoxyIt-v${{ github.ref_name }}-${{ matrix.build_platform }}.zip
+      run: sha256sum.exe bin\${{ matrix.build_configuration }}\${{ matrix.build_platform }}\DoxyIt-${{ github.ref_name }}-${{ matrix.build_platform }}.zip
